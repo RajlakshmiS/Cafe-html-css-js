@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cart</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #9CB071; 
+      font-family: 'Georgia', serif;
+      font-size: 50px;
+      color: #FFFACD;
+      padding: 10px;
+      display: flex;
+      justify-content: center; /* Centers the content horizontally */
+      align-items: center;    /* Centers the content vertically */
+      font-weight: bold;
+      text-align: center;     /* Ensures the text itself is centered */
+    }
+
+    .cart-container {
+      max-width: 800px;
+      margin: 30px auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+  
+
+    /* Cart Items Box */
+    #cart-items {
+      display: flex;
+      flex-direction: column;
+      gap: 10px; /* Adds space between each cart item */
+      border: 1px solid #ddd;
+      padding: 30px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .cart-item div {
+      margin: 0;
+      font-size: 16px;
+      color: #3d3d3d;
+    }
+
+    #total-price {
+      text-align: right;
+      margin-top: 15px;
+    }
+
+    #total-price h3 {
+      margin: 0;
+      color: #333;
+    }
+
+    .payment-button {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .payment-button a {
+      display: inline-block;
+      text-decoration: none;
+      background-color: #9CB071;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    .payment-button a:hover {
+      background-color: #73A16C;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="cafe-name">
+      <p>Your Cart</p>
+    </div>
+  </header>
+
+  <div class="cart-container">
+    
+    <!-- Cart Items Box -->
+    <div id="cart-items">
+      <!-- Cart items will be dynamically inserted here -->
+    </div>
+
+    <div id="total-price">
+      <h3>Total: Rs. <span id="total-amount">0</span></h3>
+    </div>
+
+    <div class="payment-button">
+      <a href="payment.html">Proceed to Payment</a>
+    </div>
+  </div>
+
+  <script>
+    // Function to display the cart items
+    function displayCart() {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      let cartItemsDiv = document.getElementById('cart-items');
+      let totalAmount = 0;
+
+      cartItemsDiv.innerHTML = ''; // Clear previous cart items
+
+      cart.forEach(item => {
+        // Create a div for each item
+        let itemDiv = document.createElement('div');
+        itemDiv.classList.add('cart-item');
+
+        itemDiv.innerHTML = `
+          <div>${item.name}</div>
+          <div>Quantity: ${item.quantity}</div>
+          <div>Price: Rs. ${item.price}</div>
+          <div>Total: Rs. ${item.quantity * item.price}</div>
+        `;
+
+        cartItemsDiv.appendChild(itemDiv);
+
+        // Update the total price
+        totalAmount += item.quantity * item.price;
+      });
+
+      // Display the total amount
+      document.getElementById('total-amount').textContent = totalAmount;
+    }
+
+    // Initialize the cart display
+    document.addEventListener("DOMContentLoaded", function() {
+      displayCart();
+    });
+  </script>
+</body>
+</html>

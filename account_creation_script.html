@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HTML 5 Boilerplate</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+	<script src="index.js"></script>
+  </body>
+<?php
+// Check if the form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Retrieve form data
+    $name = $_POST["name"];
+    $email = $_POST["email"];
+    $password = $_POST["password"];
+    
+    // Perform server-side validation (similar to client-side validation)
+    if (empty($name) || empty($email) || empty($password)) {
+        echo "All fields are required.";
+    } else {
+        // Connect to your MySQL database (replace with your database credentials)
+        $conn = mysqli_connect("localhost", "root", "", "cafe");
+        
+        // Check the database connection
+        if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+        }
+        
+        // Hash the password for security (you should use a stronger hashing method)
+        $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+        
+        // Insert user data into the database
+        $sql = "INSERT INTO users (name, email, password) VALUES ('$name', '$email', '$hashed_password')";
+        if (mysqli_query($conn, $sql)) {
+            echo "Account created successfully!";
+        } else {
+            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+        }
+        
+        // Close the database connection
+        mysqli_close($conn);
+    }
+}
+?>
+</html>

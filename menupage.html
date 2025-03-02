@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Page</title>
+    <style>
+        
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+            color: #333;
+        }
+
+        header { 
+            background-color: #FFFACD; 
+            font-family: 'Georgia', serif; 
+            font-size: 48px; 
+            color: #9CB071; 
+            padding: 20px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            font-weight: bold; 
+        } 
+
+        .cart-icon { 
+            width: 50px; /* Adjust the size as needed */ 
+            height: 50px; 
+            margin-left: 30px; /* Adjust the margin as needed */ 
+            cursor: pointer; 
+        }
+
+        .image-container { 
+            background-image: url('menu.png'); 
+            background-size: cover; 
+            width: 100%; 
+            height: 100vh; 
+            position: relative; 
+        }
+
+        .menu-bar {
+            display: flex;
+            justify-content: center;
+            background-color: #9CB071;
+            padding: 10px 0;
+        }
+
+        .menu-option {
+            margin: 0 15px;
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .menu-option:hover {
+            background-color: #73A16C;
+            cursor: pointer;
+        }
+
+        .menu-container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .menu-container h2 {
+            color: #9CB071;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .menu-container h3 {
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1px solid #e6e6e6;
+            padding: 15px 0;
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+
+        #brunch-menu { display: block; } 
+        #dessert-menu, #drinks-menu { display: none; } 
+
+        .item-left {
+            max-width: 70%;
+        }
+
+        .item-left h4 {
+            margin: 0;
+            color: #333;
+            font-size: 18px;
+        }
+
+        .item-left p {
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .price {
+            font-weight: bold;
+            color: #9CB071;
+            font-size: 16px;
+        }
+
+        .add-to-cart {
+            background-color: #9CB071;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .add-to-cart:hover {
+            background-color: #73A16C;
+        }
+
+        .quantity {
+            font-size: 16px;
+            font-weight: bold;
+            color: #555;
+            padding: 5px 10px;
+            background-color: #f4f4f4;
+            border-radius: 5px;
+            width: 40px;
+            text-align: center;
+        }
+
+    </style>
+</head>
+
+    <header>
+        <div class="cafe-name">
+            <p>The Menu</p>
+        </div>
+        <a href="cart.html"><img class="cart-icon" src="cart-icon.png" alt="Cart"></a>
+    </header>
+
+    <div class="image-container"></div>
+
+    <div class="spacer"></div>
+
+   <div class="menu-bar" id="menu-bar">
+        <a class="menu-option" href="javascript:void(0);" onclick="showMenu('brunch-menu')">Brunch Menu</a>
+        <a class="menu-option" href="javascript:void(0);" onclick="showMenu('dessert-menu')">Dessert Menu</a>
+        <a class="menu-option" href="javascript:void(0);" onclick="showMenu('drinks-menu')">Drinks Menu</a>
+    </div>
+
+    <div id="brunch-menu" class="menu-container">
+
+            <h2>Brunch Menu</h2>
+    <p>Served daily from 9:30 AM to 6 PM</p>
+    <h3>Cafe Special</h3>
+    <p>Seasonal menu items; limited time only</p>
+
+        <div class="menu-item">
+            <div class="item-left">
+                <h4>Avocado Morning Croffle</h4>
+                <p>Classic croffle with house-made avocado spread. Topped with potato hash brown, bacon chips, poached egg, and pickled red onion; garnished with Parmesan cheese and micro greens</p>
+                <span>Rs. 499</span>
+            </div>
+            <div class="item-right">
+                <button class="add-to-cart" onclick="addToCart('Avocado Morning Croffle', 499)">Add to Cart</button>
+                <span class="quantity" data-name="Avocado Morning Croffle">0</span>
+            </div>
+        </div>
+
+    <div class="menu-item">
+            <div class="item-left">
+                <h4>Katsu Kimchi Udon</h4>
+                <p>Udon noodles with kimchi soup broth, add your choice of katsu (chicken or pork).</p>
+                <span>Rs. 750</span>
+            </div>
+            <div class="item-right">
+                <button class="add-to-cart" onclick="addToCart('Katsu Kimchi Udon', 750)">Add to Cart</button>
+                <span class="quantity" data-name="Katsu Kimchi Udon">0</span>
+            </div>
+        </div>
+
+    <div class="menu-item">
+            <div class="item-left">
+                <h4>Ebi Katsu Curry Udon</h4>
+                <p>Udon noodle with spicy curry sauce base topped with poached egg and deep-fried breaded katsu shrimp; garnished with green onion and corn</p>
+                <span>Rs. 650</span>
+            </div>
+            <div class="item-right">
+                <button class="add-to-cart" onclick="addToCart('Ebi Katsu Curry Udon', 650)">Add to Cart</button>
+                <span class="quantity" data-name="Ebi Katsu Curry Udon">0</span>
+            </div>
+        </div>
+
+    <div class="menu-item">
+            <div class="item-left">
+                <h4>Classic Eggs Benedict</h4>
+                <p>Poached eggs nestled on toasted English muffins, draped with velvety hollandaise sauce, and served with a side of crispy home fries.</p>
+                <span>Rs. 550</span>
+            </div>
+            <div class="item-right">
+                <button class="add-to-cart" onclick="addToCart('Classic Eggs Benedict', 550)">Add to Cart</button>
+                <span class="quantity" data-name="Classic Eggs Benedict">0</span>
+            </div>
+        </div>
+
+    <div class="menu-item">
+            <div class="item-left">
+                <h4>Belgian Waffle Delight</h4>
+                <p>Indulge in our fluffy Belgian waffles, crowned with fresh strawberries, whipped cream, and a drizzle of maple syrup.</p>
+                <span>Rs. 450</span>
+            </div>
+            <div class="item-right">
+                <button class="add-to-cart" onclick="addToCart('Belgian Waffle Delight', 450)">Add to Cart</button>
+                <span class="quantity" data-name="Belgian Waffle Delight">0</span>
+            </div>
+        </div>
+
+    <div class="menu-item">
+            <div class="item-left">
+                <h4>Vegetarian Breakfast Platter</h4>
+                <p>Start your day with a hearty platter of scrambled eggs, saut ed mushrooms, grilled tomatoes, and crispy hash browns. Served with a buttery croissant.</p>
+                <span>Rs. 499</span>
+            </div>
+            <div class="item-right">
+                <button class="add-to-cart" onclick="addToCart('Vegetarian Breakfast Platter', 499)">Add to Cart</button>
+                <span class="quantity" data-name="Vegetarian Breakfast Platter">0</span>
+            </div>
+        </div>
+
+    <div class="menu-item">
+            <div class="item-left">
+                <h4>Pancake Stack</h4>
+                <p>Deliciously fluffy pancakes served with a choice of maple syrup, fresh berries, or chocolate chips.</p>
+                <span>Rs. 475</span>
+            </div>
+            <div class="item-right">
+                <button class="add-to-cart" onclick="addToCart('Pancake Stack', 475)">Add to Cart</button>
+                <span class="quantity" data-name="Pancake Stack">0</span>
+            </div>
+        </div>
+
+    <div class="menu-item">
+            <div class="item-left">
+                <h4>Smoked Salmon Bagel</h4>
+                <p>A toasted bagel topped with smoked salmon, cream cheese, capers, and red onion slices.</p>
+                <span>Rs.625</span>
+            </div>
+            <div class="item-right">
+                <button class="add-to-cart" onclick="addToCart('Smoked Salmon Bagel', 625)">Add to Cart</button>
+                <span class="quantity" data-name="Smoked Salmon Bagel">0</span>
+            </div>
+        </div>
+
+    <div class="menu-item">
+            <div class="item-left">
+                <h4>Breakfast Burrito</h4>
+                <p>A hearty burrito filled with scrambled eggs, black beans, avocado, cheese, and salsa. Served with a side of sour cream and hash browns.</p>
+                <span>Rs. 575</span>
+            </div>
+            <div class="item-right">
+                <button class="add-to-cart" onclick="addToCart('Breakfast Burrito', 575)">Add to Cart</button>
+                <span class="quantity" data-name="Breakfast Burrito">0</span>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div id="dessert-menu" class="menu-container">
+    <h2>Dessert Menu</h2>
+        <p>For your sweet tooth cravings.</p>
+    <h3>Croffles</h3>
+        <p>A popular Korean coffee house pastry  pastry dough rolled like a croissant and pressed in a waffle iron until golden brown on the outside and filled with flaky layers on the inside.</p>
+
+    <div class="menu-item">
+            <div class="item-left">
+                <h4>Snow Croffle</h4>
+                <p>Classic croffle brushed with agave syrup and powdered sugar.</p>
+                <span>Rs. 450</span>
+            </div>
+            <div class="item-right">
+                <button class="add-to-cart" onclick="addToCart('Snow Croffle', 450)">Add to Cart</button>
+                <span class="quantity" data-name="Snow Croffle">0</span>
+            </div>
+        </div>
+
+    <div class="menu-item">
+            <div class="item-left">
+                <h4>Strawberry Croffle</h4>
+                <p>Topped with handmade sweet cream, diced strawberries, and powdered sugar.</p>
+                <span>Rs.450 </span>
+            </div>
+            <div class="item-right">
+                <button class="add-to-cart" onclick="addToCart('Strawberry Croffle', 450)">Add to Cart</button>
+                <span class="quantity" data-name="Strawberry Croffle">0</span>
+            </div>
+        </div>
+
+    <div class="menu-item">
+            <div class="item-left">
+                <h4>Tiramisu Croffle</h4>
+                <p>Topped with handmade cheese cream, cocoa powder, and a wafer stick.</p>
+                <span>Rs. 475</span>
+            </div>
+            <div class="item-right">
+                <button class="add-to-cart" onclick="addToCart('Tiramisu Croffle', 475)">Add to Cart</button>
+                <span class="quantity" data-name="Tiramisu Croffle">0</span>
+            </div>
+        </div>
+
+
+    <div class="menu-item">
+            <div class="item-left">
+                <h4>Banana Nutella Croffle</h4>
+                <p>Topped with Nutella spread and sliced bananas; drizzled with chocolate syrup.</p>
+                <span>Rs. 450</span>
+            </div>
+            <div class="item-right">
+                <button class="add-to-cart" onclick="addToCart('Banana Nutella Croffle', 450)">Add to Cart</button>
+                <span class="quantity" data-name="Banana Nutella Croffle">0</span>
+            </div>
+        </div>
+
+
+    <div class="menu-item">
+            <div class="item-left">
+                <h4>Lotus Caramel Croffle</h4>
+                <p></p>
+                <span>Rs. 475</span>
+            </div>
+            <div class="item-right">
+                <button class="add-to-cart" onclick="addToCart('Lotus Caramel Croffle', 475)">Add to Cart</button>
+                <span class="quantity" data-name="Lotus Caramel Croffle">0</span>
+            </div>
+        </div>
+
+
+    <div class="menu-item">
+            <div class="item-left">
+                <h4>Ice Cream Croffle</h4>
+                <p>Topped with vanilla bean ice cream and drizzled with chocolate syrup.</p>
+                <span>Rs. 500</span>
+            </div>
+            <div class="item-right">
+                <button class="add-to-cart" onclick="addToCart('Ice Cream Croffle', 500)">Add to Cart</button>
+                <span class="quantity" data-name="Ice Cream Croffle">0</span>
+            </div>
+        </div>
+
+
+    <div class="menu-item">
+            <div class="item-left">
+                <h4>Matcha Mochi Croffle</h4>
+                <p>Topped with matcha mochi ice cream and layered with house sweet cream, chocolate drizzle, and soybean powder.</p>
+                <span>Rs. 475</span>
+            </div>
+            <div class="item-right">
+                <button class="add-to-cart" onclick="addToCart('Matcha Mochi Croffle', 475)">Add to Cart</button>
+                <span class="quantity" data-name="Matcha Mochi Croffle">0</span>
+            </div>
+        </div>
+
+
+    <div class="menu-item">
+            <div class="item-left">
+                <h4>Brown Cheese Croffle</h4>
+                <p>Topped with vanilla bean ice cream covered in Norwegian caramel cheese.</p>
+                <span>Rs. 450</span>
+            </div>
+            <div class="item-right">
+                <button class="add-to-cart" onclick="addToCart('Brown Cheese Croffle', 450)">Add to Cart</button>
+                <span class="quantity" data-name="Brown Cheese Croffle">0</span>
+            </div>
+        </div>
+
+
+    <div class="menu-item">
+            <div class="item-left">
+                <h4>Oreo Croffle</h4>
+                <p>Topped with vanilla bean ice cream and Oreo chunks; drizzled with chocolate syrup.</p>
+                <span>Rs. 450</span>
+            </div>
+            <div class="item-right">
+                <button class="add-to-cart" onclick="addToCart('Oreo Croffle', 450)">Add to Cart</button>
+                <span class="quantity" data-name="Oreo Croffle">0</span>
+            </div>
+        </div>
+
+
+    <div class="menu-item">
+            <div class="item-left">
+                <h4>Matcha Ice Cream Croffle</h4>
+                <p>Topped with matcha ice cream and drizzled with chocolate syrup.</p>
+                <span>Rs. 450</span>
+            </div>
+            <div class="item-right">
+                <button class="add-to-cart" onclick="addToCart('Matcha Ice Cream Croffle', 450)">Add to Cart</button>
+                <span class="quantity" data-name="Matcha Ice Cream Croffle">0</span>
+            </div>
+        </div>
+
+    <div class="menu-item">
+            <div class="item-left">
+                <h4>Affogato Croffle</h4>
+                <p>Your favorite Italian coffee-based dessert with a twist. Croffle topped with vanilla bean ice cream layered with waffle crumbs and cocoa powder; with a shot of hot espresso on the side to drown the ice cream.</p>
+                <span>Rs. 450</span>
+            </div>
+            <div class="item-right">
+                <button class="add-to-cart" onclick="addToCart('Affogato Croffle', 450)">Add to Cart</button>
+                <span class="quantity" data-name="Affogato Croffle">0</span>
+            </div>
+        </div>
+
+    <h3>Cakes</h3>
+
+    <div class="menu-item">
+            <div class="item-left">
+                <h4>Brulee Cheesecake</h4>
+                <p>Traditional Creme Brulee styled cheesecake.</p>
+                <span>Rs. 575</span>
+            </div>
+            <div class="item-right">
+                <button class="add-to-cart" onclick="addToCart('Brulee Cheesecake', 575)">Add to Cart</button>
+                <span class="quantity" data-name="Brulee Cheesecake">0</span>
+            </div>
+        </div>
+
+    <div class="menu-item">
+            <div class="item-left">
+                <h4>Red Velvet Cheesecake</h4>
+                <p>Traditional scarlet-colored white chocolate and vanilla-based cake layered with ermine icing.</p>
+                <span>Rs. 675</span>
+            </div>
+            <div class="item-right">
+                <button class="add-to-cart" onclick="addToCart('Red Velvet Cheesecake', 675)">Add to Cart</button>
+                <span class="quantity" data-name="Red Velvet Cheesecake">0</span>
+            </div>
+        </div>
+
+    <h3>Macarons from Annie's</h3>
+
+
+    <div class="menu-item">
+            <div class="item-left">
+                <h4>Matcha Macaron</h4>
+                <p></p>
+                <span>Rs. 300</span>
+            </div>
+            <div class="item-right">
+                <button class="add-to-cart" onclick="addToCart('Matcha Macaron', 300)">Add to Cart</button>
+                <span class="quantity" data-name="Matcha Macaron">0</span>
+            </div>
+        </div>
+
+    <div class="menu-item">
+            <div class="item-left">
+                <h4>Taro Macaron</h4>
+                <p></p>
+                <span>Rs. 300</span>
+            </div>
+            <div class="item-right">
+                <button class="add-to-cart" onclick="addToCart('Taro Macaron', 300)">Add to Cart</button>
+                <span class="quantity" data-name="Taro Macaron">0</span>
+            </div>
+        </div>
+
+    <div class="menu-item">
+            <div class="item-left">
+                <h4>Nutella Macaron</h4>
+                <p></p>
+                <span>Rs. 300</span>
+            </div>
+            <div class="item-right">
+                <button class="add-to-cart" onclick="addToCart('Nutella Macaron', 300)">Add to Cart</button>
+                <span class="quantity" data-name="Nutella Macaron">0</span>
+            </div>
+        </div>
+
+    <div class="menu-item">
+            <div class="item-left">
+                <h4>Salted Caramel Macaron</h4>
+                <p></p>
+                <span>Rs. 300</span>
+            </div>
+            <div class="item-right">
+                <button class="add-to-cart" onclick="addToCart('Salted Caramel Macaron', 300)">Add to Cart</button>
+                <span class="quantity" data-name="Salted Caramel Macaron">0</span>
+            </div>
+        </div>
+
+       <h3>Bakery</h3>
+
+    <div class="menu-item">
+            <div class="item-left">
+                <h4>Buttered Croissant</h4>
+                <p></p>
+                <span>Rs. 375</span>
+            </div>
+            <div class="item-right">
+                <button class="add-to-cart" onclick="addToCart('Buttered Croissant', 375)">Add to Cart</button>
+                <span class="quantity" data-name="Buttered Croissant">0</span>
+            </div>
+        </div>
+
+    <div class="menu-item">
+            <div class="item-left">
+                <h4>Almond Croissant</h4>
+                <p>Croissant topped with almonds and powdered sugar</p>
+                <span>Rs. 375</span>
+            </div>
+            <div class="item-right">
+                <button class="add-to-cart" onclick="addToCart('Almond Croissant', 375)">Add to Cart</button>
+                <span class="quantity" data-name="Almond Croissant">0</span>
+            </div>
+        </div>
+
+    <div class="menu-item">
+            <div class="item-left">
+                <h4>Chocolate Croissant</h4>
+                <p>Chocolate croissant topped with powdered sugar or cocoa powder</p>
+                <span>Rs. 390</span>
+            </div>
+            <div class="item-right">
+                <button class="add-to-cart" onclick="addToCart('Chocolate Croissant', 390)">Add to Cart</button>
+                <span class="quantity" data-name="Chocolate Croissant">0</span>
+            </div>
+        </div>
+</div>
+
+
+    <div id="drinks-menu" class="menu-container">
+    <h2>Drink Menu</h2>
+        <p>Freshly made specialty drinks and Espresso bar closes 6:30 PM.</p>
+    <div class="menu-item">
+            <div class="item-left">
+                <h4>Shot of Espresso (1 oz)</h4>
+                <p></p>
+                <span>Rs. 175</span>
+            </div>
+            <div class="item-right">
+                <button class="add-to-cart" onclick="addToCart('Shot of Espresso (1 oz)', 175)">Add to Cart</button>
+                <span class="quantity" data-name="Shot of Espresso (1 oz)">0</span>
+            </div>
+        </div>
+
+    <div class="menu-item">
+            <div class="item-left">
+                <h4>Doppio (2 oz)</h4>
+                <p></p>
+                <span>Rs. 250</span>
+            </div>
+            <div class="item-right">
+                <button class="add-to-cart" onclick="addToCart('Doppio (2 oz)', 250)">Add to Cart</button>
+                <span class="quantity" data-name="Doppio (2 oz)">0</span>
+            </div>
+        </div>
+
+    <div class="menu-item">
+            <div class="item-left">
+                <h4>Americano</h4>
+                <p></p>
+                <span>Rs. 350</span>
+            </div>
+            <div class="item-right">
+                <button class="add-to-cart" onclick="addToCart('Americano', 350)">Add to Cart</button>
+                <span class="quantity" data-name="Americano">0</span>
+            </div>
+        </div>
+
+    <div class="menu-item">
+            <div class="item-left">
+                <h4>Cappuccino</h4>
+                <p></p>
+                <span>Rs. 350</span>
+            </div>
+            <div class="item-right">
+                <button class="add-to-cart" onclick="addToCart('Cappuccino', 350)">Add to Cart</button>
+                <span class="quantity" data-name="Cappuccino">0</span>
+            </div>
+        </div>
+
+    <div class="menu-item">
+            <div class="item-left">
+                <h4>Cafe Latte</h4>
+                <p></p>
+                <span>Rs. 375</span>
+            </div>
+            <div class="item-right">
+                <button class="add-to-cart"onclick="addToCart('Cafe Latte', 375)">Add to Cart</button>
+                <span class="quantity" data-name="Cafe Latte">0</span>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // Function to handle adding items to the cart
+        function addToCart(name, price) {
+          // Get the current cart from localStorage
+          let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      
+          // Check if the item is already in the cart
+          let itemIndex = cart.findIndex(item => item.name === name);
+      
+          if (itemIndex === -1) {
+            // If item is not in the cart, add it
+            cart.push({ name: name, price: price, quantity: 1 });
+          } else {
+            // If item is already in the cart, increment the quantity
+            cart[itemIndex].quantity += 1;
+          }
+      
+          // Save the updated cart to localStorage
+          localStorage.setItem('cart', JSON.stringify(cart));
+      
+          // Update the quantity displayed on the menu page
+          updateCartQuantity();
+        }
+      
+        // Function to update the quantity display on the menu page
+        function updateCartQuantity() {
+          let cart = JSON.parse(localStorage.getItem('cart')) || [];
+          cart.forEach(item => {
+            let quantityElement = document.querySelector(`.quantity[data-name="${item.name}"]`);
+            if (quantityElement) {
+              quantityElement.textContent = item.quantity;
+            }
+          });
+        }
+      
+        // Initialize the cart quantity display
+        document.addEventListener("DOMContentLoaded", function() {
+          updateCartQuantity();
+        });
+      </script>
+      
+    <script>
+        function showMenu(menuId) {
+            document.getElementById('brunch-menu').style.display = 'none';
+            document.getElementById('dessert-menu').style.display = 'none';
+            document.getElementById('drinks-menu').style.display = 'none';
+            document.getElementById(menuId).style.display = 'block';
+        }
+        <!-- JavaScript Code -->
+    </script>

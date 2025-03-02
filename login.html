@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <style>
+    body {
+      font-family: Georgia, serif;
+      background-image: url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2047&q=80');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      margin: 0;
+      padding: 0;
+      color: #FFFACD;
+      display: flex;
+      justify-content: center; /* Center horizontally */
+      align-items: center; /* Center vertically */
+      height: 100vh; /* Take up the full viewport height */
+    }
+
+    .container {
+      max-width: 800px; /* Increase max-width for a bigger box */
+      padding: 40px; /* Increase padding */
+      background-color: rgba(255, 255, 255, 0.7); /* Add some transparency to the container */
+      border: 1px solid #ccc;
+      border-radius: 10px; /* Increase border radius */
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+      text-align: center;
+
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #000; /* Change text color to black */
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 95%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 15px 20px; /* Increase padding */
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+    }
+  </style>
+  <script>
+    const cafeAccessCode = "CAFE123"; // Hardcoded access code for the cafe
+
+    // Handle login or registration
+    function handleLogin(event) {
+      event.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const accessCode = document.getElementById("accessCode").value;
+
+      if (accessCode === cafeAccessCode) {
+        // Save user details in localStorage
+        localStorage.setItem("customerName", name);
+        localStorage.setItem("isLoggedIn", "true");
+
+        // Redirect to main home page
+        window.location.href = "mainhome.html";
+      } else {
+        alert("Invalid access code. Please try again.");
+      }
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h2>Welcome to Downtown Zen</h2>
+    <form onsubmit="handleLogin(event)">
+      <label for="name">Your Name:</label>
+      <input type="text" id="name" name="name" placeholder="Enter your name" required>
+
+      <label for="accessCode">Cafe Access Code:</label>
+      <input type="text" id="accessCode" name="accessCode" placeholder="Enter access code" required>
+
+      <button type="submit">Enter</button>
+    </form>
+  </div>
+</body>
+</html>

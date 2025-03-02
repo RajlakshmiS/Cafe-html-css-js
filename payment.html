@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #9CB071; 
+            font-family: 'Georgia', serif;
+            font-size: 50px;
+            color: #FFFACD;
+            padding: 10px;
+            display: flex;
+            justify-content: center; /* Centers the content horizontally */
+            align-items: center;    /* Centers the content vertically */
+            font-weight: bold;
+            text-align: center;     /* Ensures the text itself is centered */
+        }
+
+        .payment-container {
+            max-width: 400px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        #payment-method:hover {
+            border-color: #73A16C; /* Slightly darker green */
+            background-color: #FFF; /* Brighten background */
+            cursor: pointer; /* Show pointer on hover */
+        }
+
+        #payment-method:focus {
+            outline: none;
+            box-shadow: 0 0 5px #9CB071; /* Add glow on focus */
+        }
+        
+
+        .payment-form {
+            background-color: #f9f9f9; /* Light background for the form */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+            max-width: 400px;
+            margin: 0 auto; /* Center align */
+        }
+
+        .payment-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .payment-form input[type="text"],
+        .payment-form input[type="number"],
+        .payment-form select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #9CB071; /* Match green theme */
+            border-radius: 5px;
+            background-color: #fff; /* Clean white background */
+            font-size: 14px;
+            color: #333;
+            box-sizing: border-box;
+        }
+
+        .payment-form input[type="text"]:focus,
+        .payment-form input[type="number"]:focus {
+            outline: none;
+            border-color: #73A16C; /* Slightly darker green on focus */
+            box-shadow: 0 0 5px #9CB071; /* Add subtle glow */
+        }
+
+        .payment-form button {
+            width: 100%;
+            padding: 12px;
+            background-color: #9CB071;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .payment-form button:hover {
+            background-color: #73A16C; /* Darker green on hover */
+        }
+
+        button:hover {
+        background-color: #73A16C;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #9CB071;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="cafe-name">
+            <p>Payment</p>
+        </div>
+    </header>
+
+    <div class="payment-container" id="payment-container">
+        <h2>Enter Payment Details</h2>
+    
+        <!-- Payment Method Selection -->
+        <label for="payment-method" style="font-size: 16px; color: #333; font-weight: bold; margin-top: 10px;">Select Payment Method:</label>
+        <select id="payment-method" style="width: 100%; padding: 10px; border: 1px solid #9CB071; border-radius: 5px; background-color: #F9F9F9; font-size: 16px; color: #333; margin-top: 5px;">
+        <option value="" style="color: #AAA;">--Choose Payment Method--</option>
+        <option value="credit-card" style="color: #333;">Credit Card</option>
+        <option value="upi" style="color: #333;">UPI</option>
+        <option value="cash-on-delivery" style="color: #333;">Pay on Counter</option>
+    </select>
+
+    
+        <!-- Card Details Form -->
+        <form class="payment-form" id="card-details-form" style="display: none;" onsubmit="confirmPayment(event)">
+            <label for="card-number">Card Number:</label>
+            <input type="text" id="card-number" placeholder="**** **** **** ****" required>
+            
+            <label for="expiry-date">Expiry Date:</label>
+            <input type="text" id="expiry-date" placeholder="MM/YY" maxlength="5" required>
+            
+            <label for="cvv">CVV:</label>
+            <input type="number" id="cvv" placeholder="123" required>
+            
+            <label for="name">Cardholder's Name:</label>
+            <input type="text" id="name" placeholder="John Doe" required>
+            
+            <label for="amount">Amount:</label>
+            <input type="number" id="amount" placeholder="Enter the amount to pay" required readonly>
+            
+            <button type="submit">Submit Payment</button>
+        </form>
+
+    
+        <!-- UPI QR Code Section (Initially Hidden) -->
+        <div id="upi-qr-code" style="display: none; text-align: center;">
+            <h3>Scan to Pay via UPI</h3>
+            <img src="qr.jpg" alt="UPI QR Code" style="width: 200px; height: 200px;"><br><br>
+            <p>Total: Rs. <span id="total-amount-upi"></span></p> <!-- Display total amount here -->
+            <button onclick="confirmPayment()">Confirm Payment</button>
+        </div>
+    
+        <!-- Cash on Delivery Confirmation Button (Initially Hidden) -->
+        <div id="cod-confirmation" style="display: none; text-align: center; margin-top: 20px;">
+            <button onclick="generateReceipt()">Confirm Payment (Pay on Counter)</button>
+        </div>
+    </div>
+    
+    <!-- Thank You Message (Initially Hidden) -->
+    <div id="thank-you-message" style="display: none; text-align: center; margin-top: 20px;">
+        <h2>Thank you for your order!</h2>
+        <p>Your order has been successfully placed.</p>
+    </div>
+    
+    
+    <!-- Receipt Section (Initially Hidden) -->
+    <div id="receipt-section" style="display: none; text-align: center; margin-top: 20px; padding: 20px; border: 1px solid #E6E6E6; border-radius: 10px; background-color: #F8F9FA; max-width: 500px; margin: auto;">
+        <h2 style="color: #9CB071; margin-bottom: 20px;">Order Receipt</h2>
+        <p style="font-size: 18px; margin-bottom: 10px;">Order Number: <span id="order-number" style="font-weight: bold;"></span></p>
+        <p style="font-size: 18px;">Total Amount: <span id="total-amount-receipt" style="font-weight: bold;"></span> Rs.</p>
+        <button class="payment-button-common" onclick="window.location.href='mainhome.html'">Return to Home</button>
+    </div>
+    
+    
+    
+    <script>
+
+        document.getElementById('expiry-date').addEventListener('input', function (e) {
+            let input = e.target.value.replace(/[^0-9]/g, ''); // Remove non-numeric characters
+            if (input.length > 2) {
+                input = input.substring(0, 2) + '/' + input.substring(2); // Insert '/' after 2 digits
+            }
+            e.target.value = input; // Update the field with formatted input
+        });
+
+        // Update the payment page to display the total amount
+        function updatePaymentPage() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let totalAmount = 0;
+    
+            cart.forEach(item => {
+                totalAmount += item.quantity * item.price;
+            });
+    
+            // Display the total amount on the payment page and store it in localStorage
+            document.getElementById('amount').value = totalAmount;
+            localStorage.setItem('totalAmount', totalAmount);
+        }
+    
+        // JavaScript to toggle card details form, UPI QR code, and COD confirmation button
+        document.getElementById('payment-method').addEventListener('change', function() {
+            const cardDetailsForm = document.getElementById('card-details-form');
+            const upiQrCode = document.getElementById('upi-qr-code');
+            const codConfirmation = document.getElementById('cod-confirmation');
+            const totalAmount = localStorage.getItem('totalAmount');
+    
+            // Show card details form if "Credit Card" is selected
+            if (this.value === 'credit-card') {
+                cardDetailsForm.style.display = 'block';
+                upiQrCode.style.display = 'none';
+                codConfirmation.style.display = 'none';
+            } 
+            // Show UPI QR code if "UPI" is selected
+            else if (this.value === 'upi') {
+                cardDetailsForm.style.display = 'none';
+                upiQrCode.style.display = 'block';
+                codConfirmation.style.display = 'none';
+                // Display the total amount for UPI
+                document.getElementById('total-amount-upi').textContent = totalAmount;
+            } 
+            // Show COD confirmation button if "Pay on Counter" is selected
+            else if (this.value === 'cash-on-delivery') {
+                cardDetailsForm.style.display = 'none';
+                upiQrCode.style.display = 'none';
+                codConfirmation.style.display = 'block';
+                // Display the total amount for COD
+                document.getElementById('total-amount-receipt').textContent = totalAmount;
+            } 
+            // Hide all for other payment methods
+            else {
+                cardDetailsForm.style.display = 'none';
+                upiQrCode.style.display = 'none';
+                codConfirmation.style.display = 'none';
+            }
+        });
+    
+        // Format card number input to add spaces every 4 digits
+        document.getElementById('card-number').addEventListener('input', function(e) {
+            let cardNumber = e.target.value.replace(/\s+/g, ''); // Remove any existing spaces
+            if (cardNumber.length > 16) {
+                cardNumber = cardNumber.substr(0, 16); // Limit to 16 digits
+            }
+            e.target.value = cardNumber.match(/.{1,4}/g)?.join(' ') || cardNumber; // Add space after every 4 digits
+        });
+    
+        // Display the total amount in the amount field when page loads
+        document.addEventListener("DOMContentLoaded", function() {
+            updatePaymentPage();
+        });
+    
+        // Function to generate order number and show receipt for any payment method
+        function generateOrderNumber() {
+            return 'ORD' + Math.floor(Math.random() * 1000000);
+        }
+    
+        // Function to confirm payment (for Credit Card/UPI/Cash on Delivery)
+        function confirmPayment(event) {
+            if (event) event.preventDefault(); // Prevent form submission if coming from form
+    
+            // Generate the order number
+            const orderNumber = generateOrderNumber();
+    
+            // Store order number and total amount in localStorage
+            localStorage.setItem('orderNumber', orderNumber);
+            localStorage.setItem('totalAmount', document.getElementById('amount').value);
+    
+            // Clear cart data from localStorage
+            localStorage.removeItem('cart');  // Clear cart items
+    
+            // Display receipt with order number and amount
+            document.getElementById('order-number').textContent = orderNumber;
+            document.getElementById('receipt-section').style.display = 'block';
+            document.getElementById('payment-container').style.display = 'none';
+            document.getElementById('thank-you-message').style.display = 'block';
+    
+            alert("Thank you for your order!");
+        }
+    
+        // Function to confirm payment for Cash on Delivery (COD)
+        function generateReceipt() {
+            // Generate the order number
+            const orderNumber = generateOrderNumber();
+    
+            // Store order number and total amount in localStorage
+            localStorage.setItem('orderNumber', orderNumber);
+            localStorage.setItem('totalAmount', document.getElementById('amount').value);
+    
+            // Clear cart data from localStorage
+            localStorage.removeItem('cart');  // Assuming cart items are stored under 'cart'
+    
+            // Display receipt with order number and amount
+            document.getElementById('order-number').textContent = orderNumber;
+            document.getElementById('receipt-section').style.display = 'block';
+            document.getElementById('payment-container').style.display = 'none';
+            document.getElementById('thank-you-message').style.display = 'block';
+    
+            alert("Thank you for your order!");
+        }
+    </script>
+    </body>
+    </html>
+    
